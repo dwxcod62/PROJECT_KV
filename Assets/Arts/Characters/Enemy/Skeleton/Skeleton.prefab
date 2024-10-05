@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4271072975852579777}
   - component: {fileID: 4032042954724192328}
   - component: {fileID: 8616474665092729758}
+  - component: {fileID: 9202181613204425343}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Enemy
@@ -209,3 +210,20 @@ MonoBehaviour:
   disableSimulation: 0
   _health: 1
   _targetAble: 1
+--- !u!114 &9202181613204425343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8531354868285555362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9f0c12e0a0b7424e8a4dbc08683ad53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droppedItemPrefab: {fileID: 4089151921323733804, guid: ee3d224313e091b4ebe577f576edd58d, type: 3}
+  LootList:
+  - {fileID: 11400000, guid: 9112f59524246a7459dda4e148e64cd8, type: 2}
+  - {fileID: 11400000, guid: 8757f9005674d13489f0932eba1a3171, type: 2}
+  - {fileID: 11400000, guid: c8578c65cdc51064d9983b8f5928b48b, type: 2}

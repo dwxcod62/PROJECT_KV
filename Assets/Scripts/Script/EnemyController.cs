@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    void Start()
+    public void Die()
     {
-
-    }
-
-    void Update()
-    {
-
+        GetComponent<LootBag>().InstantiateLoot(transform.localPosition);
     }
 }
