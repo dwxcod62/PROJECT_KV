@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lootSprite: {fileID: 21300000, guid: e9c6db46526351d4e97aae69020832d1, type: 3}
   lootName: Purple Gem
-  dropChance: 10
+  dropChance: 100

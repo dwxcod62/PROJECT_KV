@@ -33,11 +33,6 @@ public class HItBoxController : MonoBehaviour
             // col.SendMessage("OnHit", swordDamage, knockBackValue);
             damageAble.OnHit(swordDamage, knockBackValue);
         }
-        else
-        {
-            Debug.Log("Collider does not implement IDamageAble");
-        }
-
     }
 
     void IsFacingRight(bool isRight)

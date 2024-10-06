@@ -36,6 +36,7 @@ public class DamageCharacter : MonoBehaviour, IDamageAble
             if (_health <= 0)
             {
                 animator.SetBool("IsAlive", false);
+                animator.SetTrigger("Death");
                 TargetAble = false;
             }
         }
