@@ -8,6 +8,7 @@ public class DetectionZone : MonoBehaviour
     private string tagTarget = "Player";
     public List<Collider2D> detectedObjs = new List<Collider2D>();
     public Collider2D col;
+    public bool playerIn = false;
 
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -18,6 +19,7 @@ public class DetectionZone : MonoBehaviour
             if (damageAble.Health > 0)
             {
                 detectedObjs.Add(collider);
+                playerIn = true;
             }
             else if (damageAble.Health <= 0 && detectedObjs.Count > 0)
             {
@@ -31,6 +33,7 @@ public class DetectionZone : MonoBehaviour
         if (collider.tag == tagTarget && detectedObjs.Count > 0)
         {
             detectedObjs.Remove(collider);
+            playerIn = false;
         }
     }
 }

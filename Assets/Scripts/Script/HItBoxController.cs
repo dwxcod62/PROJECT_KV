@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HItBoxController : MonoBehaviour
 {
+    private PlayerController playerController;
+
     public float swordDamage = 1f;
     public float knockBackForce = 5000f;
     public Collider2D swordCollider;
@@ -13,6 +15,9 @@ public class HItBoxController : MonoBehaviour
 
     void Start()
     {
+        playerController = FindObjectOfType<PlayerController>();
+        
+
         if (swordCollider == null)
         {
             Debug.Log("Sword collider not set");

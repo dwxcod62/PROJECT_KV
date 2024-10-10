@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DamageCharacter : MonoBehaviour, IDamageAble
 {
@@ -12,7 +13,7 @@ public class DamageCharacter : MonoBehaviour, IDamageAble
     Collider2D physicCollider;
 
     bool IsAlive = true;
-
+    public Image healthBarFill;
 
     public void Start()
     {
@@ -20,6 +21,11 @@ public class DamageCharacter : MonoBehaviour, IDamageAble
         physicCollider = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
         animator.SetBool("IsAlive", IsAlive);
+
+        if (healthBarFill != null)
+        {
+            healthBarFill.fillAmount = _health / _maxHealth;
+        }
     }
 
     public float Health
@@ -32,6 +38,10 @@ public class DamageCharacter : MonoBehaviour, IDamageAble
             }
 
             _health = value;
+            if (healthBarFill != null)
+            {
+                healthBarFill.fillAmount = _health / _maxHealth;
+            }
 
             if (_health <= 0)
             {
@@ -63,6 +73,7 @@ public class DamageCharacter : MonoBehaviour, IDamageAble
         }
     }
 
+    public float _maxHealth = 100f;
     public float _health = 100f;
     public bool _targetAble = true;
 

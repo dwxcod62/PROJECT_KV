@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 100f;
     public float maxSpeed = 2.5f;
     public float idleFriction = 0.9f;
+    public int weapon = 1;
 
     bool isMoving = false;
     bool canMove = true;
@@ -77,5 +78,11 @@ public class PlayerController : MonoBehaviour
     void OnFire()
     {
         animator.SetTrigger("isAttack");
+    }
+
+    void OnChangeWeapon()
+    {
+        weapon = weapon == 0 ? 1 : 0;
+        animator.SetInteger("idWeapon", weapon);
     }
 }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+
 
 public class EnemyController : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class EnemyController : MonoBehaviour
     Animator an;
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
+
+    public Image attentionIcon;
     public event Action<GameObject> OnEnemyDestroyed;
 
     void Start()
@@ -53,11 +57,22 @@ public class EnemyController : MonoBehaviour
             }
 
             an.SetBool("isMoving", true);
+            if (detectionZone.playerIn && attentionIcon.enabled == false)
+            {
+                StartCoroutine(ShowAttentionIcon());
+            }
         }
         else
         {
             an.SetBool("isMoving", false);
         }
+    }
+
+    IEnumerator ShowAttentionIcon()
+    {
+        attentionIcon.enabled = true;
+        yield return new WaitForSeconds(1);
+        attentionIcon.enabled = false;
     }
 
     bool IsObstacleInDirection(Vector2 direction)
@@ -93,4 +108,6 @@ public class EnemyController : MonoBehaviour
             OnEnemyDestroyed(gameObject);
         }
     }
+
+
 }
