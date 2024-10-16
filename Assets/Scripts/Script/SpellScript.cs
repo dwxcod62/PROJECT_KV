@@ -23,4 +23,9 @@ public class SpellScript : MonoBehaviour
         animator.speed = 1;
     }
 
+    public void DestroySkill()
+    {
+        Destroy(gameObject);
+    }
+
 }

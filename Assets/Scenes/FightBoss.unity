@@ -553,7 +553,7 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!1001 &1887458109727631702
+--- !u!1001 &7814341542797230122
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -561,55 +561,55 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2921420647039118600, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
-      propertyPath: m_Name
-      value: Skeleton Mage
-      objectReference: {fileID: 0}
-    - target: {fileID: 3759495028517487429, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
+    - target: {fileID: 4373764696979291389, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.1128907
       objectReference: {fileID: 0}
-    - target: {fileID: 3759495028517487429, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
+    - target: {fileID: 4373764696979291389, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.399065
       objectReference: {fileID: 0}
-    - target: {fileID: 3759495028517487429, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
+    - target: {fileID: 4373764696979291389, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3759495028517487429, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
+    - target: {fileID: 4373764696979291389, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3759495028517487429, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
+    - target: {fileID: 4373764696979291389, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3759495028517487429, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
+    - target: {fileID: 4373764696979291389, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3759495028517487429, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
+    - target: {fileID: 4373764696979291389, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3759495028517487429, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
+    - target: {fileID: 4373764696979291389, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3759495028517487429, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
+    - target: {fileID: 4373764696979291389, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3759495028517487429, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
+    - target: {fileID: 4373764696979291389, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6973363966492665381, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
+      propertyPath: m_Name
+      value: Skeleton Mage
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 551a42d6b0a6fe1419367bc0cc31754c, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: b88a923e785ba5d41b6f1d6cec384de6, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -618,4 +618,4 @@ SceneRoots:
   - {fileID: 695252247}
   - {fileID: 734246648}
   - {fileID: 486489744}
-  - {fileID: 1887458109727631702}
+  - {fileID: 7814341542797230122}

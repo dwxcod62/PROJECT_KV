@@ -15,8 +15,12 @@ public class UIInventoryItem : MonoBehaviour
 
     public void Awake()
     {
-        ResetData();
-        OnDeselect();
+        if (itemImage != null)
+        {
+            ResetData();
+            OnDeselect();
+        }
+
     }
 
     public void ResetData()
