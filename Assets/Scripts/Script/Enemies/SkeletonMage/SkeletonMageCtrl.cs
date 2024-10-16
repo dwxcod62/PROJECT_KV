@@ -1,24 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using UnityEngine.UI;
 
-
-public class EnemyController : MonoBehaviour
+public class SkeletonMageCtrl : MonoBehaviour
 {
+    [SerializeField] private float moveSpeed = 500f;
+    [SerializeField] private float obstacleDetectionRange = 1f;
+    [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] private DetectionZone detectionZone;
+    [SerializeField] private SkeletonMageHit skeletonMageHit;
+    [SerializeField] private GameObject spellPrefab;
 
-    public float moveSpeed = 500f;
-    public float obstacleDetectionRange = 1f;
-    public LayerMask obstacleLayer;
-    public DetectionZone detectionZone;
+    private GameObject localTarget = null;
 
     Animator an;
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
-
-    public Image attentionIcon;
-    public event Action<GameObject> OnEnemyDestroyed;
 
     void Start()
     {
@@ -27,30 +24,39 @@ public class EnemyController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
     }
+
     void FixedUpdate()
     {
 
+        bool playerInHitRange = skeletonMageHit.playerInHitRange;
         GameObject target = detectionZone.detectedObjs != null ? detectionZone.detectedObjs.gameObject : null;
+        localTarget = target;
 
-        if (target != null)
+        if (target != null && !playerInHitRange)
         {
-            HandleMovement(target.transform.position);
+            HandleMovement(target.transform.position, true);
+        }
+        else if (target != null && playerInHitRange)
+        {
+            HandleMovement(target.transform.position, false);
+            an.SetTrigger("Attack");
         }
     }
 
-    private void HandleMovement(Vector2 targetPosition)
+
+
+    private void HandleMovement(Vector2 targetPosition, bool move)
     {
         Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
 
-        if (!IsObstacleInDirection(direction))
-        {
-            MoveInDirection(direction);
-        }
-        else
+        if (IsObstacleInDirection(direction))
         {
             Vector2 newDirection = FindAlternativeDirection(direction);
-            MoveInDirection(newDirection);
+            direction = newDirection;
         }
+
+        if (move)
+            MoveInDirection(direction);
 
         FlipSprite(direction);
         an.SetBool("isMoving", true);
@@ -82,21 +88,15 @@ public class EnemyController : MonoBehaviour
 
     public void Die()
     {
-        GetComponent<LootBag>().InstantiateLoot(transform.localPosition);
-
         Destroy(gameObject);
     }
 
-    public void hitPlayerCheck()
+    public void AttackCastSpell()
     {
-        gameObject.BroadcastMessage("CheckHitPlayer");
-    }
-
-    private void OnDestroy()
-    {
-        if (OnEnemyDestroyed != null)
+        if (localTarget != null)
         {
-            OnEnemyDestroyed(gameObject);
+            Vector3 targetPosition = localTarget.transform.position;
+            GameObject SpellFireBall = Instantiate(spellPrefab, targetPosition, Quaternion.identity);
         }
     }
 
