@@ -63,7 +63,9 @@ public class EnemyController : MonoBehaviour
 
     private void FlipSprite(Vector2 direction)
     {
-        spriteRenderer.flipX = direction.x < 0;
+        bool isFacingRight = direction.x >= 0;
+        spriteRenderer.flipX = !isFacingRight;
+        gameObject.BroadcastMessage("IsFacingRight", isFacingRight);
     }
 
     private bool IsObstacleInDirection(Vector2 direction)

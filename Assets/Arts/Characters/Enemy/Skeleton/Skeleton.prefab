@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c28be3b52a4234f9bdcd05387a7760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectedObjs: []
+  detectedObjs: {fileID: 0}
   col: {fileID: 3913325905279238112}
   playerIn: 0
 --- !u!1 &4387756175498175625
@@ -581,10 +581,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -825,11 +825,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f783de3ae2cda7a42a58b52760df1ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disableSimulation: 0
-  healthBarFill: {fileID: 225658224205906959}
   _maxHealth: 3
   _health: 3
   _targetAble: 1
+  disableSimulation: 0
+  healthBarFill: {fileID: 225658224205906959}
 --- !u!114 &9202181613204425343
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,10 @@ using UnityEngine.UI;
 public class DamageCharacter : MonoBehaviour, IDamageAble
 {
 
+    [SerializeField] private float _maxHealth = 100f;
+    [SerializeField] private float _health = 100f;
+    [SerializeField] private bool _targetAble = true;
+
     public bool disableSimulation = false;
     Animator animator;
     Rigidbody2D rb;
@@ -56,6 +60,14 @@ public class DamageCharacter : MonoBehaviour, IDamageAble
         }
     }
 
+    public float MaxHealth
+    {
+        get
+        {
+            return _maxHealth;
+        }
+    }
+
     public bool TargetAble
     {
         get { return _targetAble; }
@@ -73,12 +85,6 @@ public class DamageCharacter : MonoBehaviour, IDamageAble
         }
     }
 
-    public float _maxHealth = 100f;
-    public float _health = 100f;
-    public bool _targetAble = true;
-
-
-
     void RemoveEnemy()
     {
         Destroy(gameObject);
@@ -88,7 +94,6 @@ public class DamageCharacter : MonoBehaviour, IDamageAble
     {
         Health -= damage;
         rb.AddForce(knockValue);
-
     }
 
     void IDamageAble.OnHit(float damage)

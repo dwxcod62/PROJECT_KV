@@ -228,7 +228,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 100
   maxSpeed: 2
-  idleFriction: 0.9
   weapon: 1
 --- !u!114 &3315925333621758983
 MonoBehaviour:
@@ -242,11 +241,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f783de3ae2cda7a42a58b52760df1ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disableSimulation: 1
-  healthBarFill: {fileID: 0}
   _maxHealth: 100
   _health: 100
   _targetAble: 1
+  disableSimulation: 1
+  healthBarFill: {fileID: 0}
 --- !u!1 &7637873505550833403
 GameObject:
   m_ObjectHideFlags: 0

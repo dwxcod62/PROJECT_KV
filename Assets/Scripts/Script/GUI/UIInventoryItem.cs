@@ -15,11 +15,9 @@ public class UIInventoryItem : MonoBehaviour
 
     public void Awake()
     {
-        if (itemImage != null)
-        {
-            ResetData();
-            OnDeselect();
-        }
+
+        ResetData();
+        Deselect();
 
     }
 
@@ -27,10 +25,9 @@ public class UIInventoryItem : MonoBehaviour
     {
         this.itemImage.gameObject.SetActive(false);
     }
-
-    public void OnDeselect()
+    public void Deselect()
     {
-        this.borderImage.enabled = false;
+        borderImage.enabled = false;
     }
     public void SetData(Sprite sprite, int quantity)
     {
@@ -64,7 +61,13 @@ public class UIInventoryItem : MonoBehaviour
 
     public void OnPointerClick(BaseEventData data)
     {
+
+
+        if (empty)
+            return;
+
         PointerEventData pointerData = (PointerEventData)data;
+
         if (pointerData.button == PointerEventData.InputButton.Right)
         {
             OnItemMouseBtnClick?.Invoke(this);
@@ -74,6 +77,4 @@ public class UIInventoryItem : MonoBehaviour
             OnItemClicked?.Invoke(this);
         }
     }
-
-
 }
