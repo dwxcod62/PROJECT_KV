@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 public class KeyboardController : MonoBehaviour
 {
     [SerializeField] private UIInventory inventoryUI;
-    // [SerializeField] private GameObject player;
+    [SerializeField] private GameObject player;
 
     private PlayerInput playerInput;
     void Start()
     {
         inventoryUI.InitializeInventoryUI();
-        // playerInput = player.GetComponent<PlayerInput>();
+        playerInput = player.GetComponent<PlayerInput>();
 
     }
 
@@ -24,13 +24,13 @@ public class KeyboardController : MonoBehaviour
             {
                 Time.timeScale = 0f;
                 inventoryUI.Show();
-                // playerInput.enabled = false;
+                playerInput.enabled = false;
             }
             else
             {
                 Time.timeScale = 1f;
                 inventoryUI.Hide();
-                // playerInput.enabled = true;
+                playerInput.enabled = true;
             }
         }
     }

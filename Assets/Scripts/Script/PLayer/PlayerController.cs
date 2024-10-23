@@ -38,7 +38,10 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        HandleMovement();
+        if (canMove)
+        {
+            HandleMovement();
+        }
     }
 
     private void HandleMovement()
@@ -72,15 +75,6 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void LockMovement()
-    {
-        canMove = false;
-    }
-
-    void UnLockMovement()
-    {
-        canMove = true;
-    }
 
     private void UpdateFacingDirectionByMouse(Vector3 mousePos)
     {
@@ -100,6 +94,11 @@ public class PlayerController : MonoBehaviour
         gameObject.BroadcastMessage("IsFacingRight", isRight);
     }
 
+    // Lock and Unlock Movement
+    public void LockMovement() => canMove = false;
+    public void UnLockMovement() => canMove = true;
+
+
     // PLAYER INPUT
     void OnMove(InputValue movementValue)
     {
@@ -117,16 +116,16 @@ public class PlayerController : MonoBehaviour
 
     void OnChangeWeapon()
     {
-        weapon = weapon == 0 ? 1 : 0;
+        weapon = 1 - weapon;
         animator.SetInteger("idWeapon", weapon);
     }
 
     // LOOTING
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Item")
+        if (col.gameObject.CompareTag("Item"))
         {
-            // col.gameObject.GetComponent<ItemPrefab>().test();
+            uIInventory.AddItem(col.gameObject);
         }
     }
 }

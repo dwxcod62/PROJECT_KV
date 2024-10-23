@@ -5,14 +5,14 @@ using UnityEngine;
 public class LootBag : MonoBehaviour
 {
     public GameObject droppedItemPrefab;
-    public List<Loot> LootList = new List<Loot>();
+    public List<ItemController> LootListGameObj = new List<ItemController>();
 
-    Loot GetDroppedItem()
+    ItemController GetDroppedItem()
     {
         int randomNumber = Random.Range(1, 101);
-        List<Loot> possibleItems = new List<Loot>();
+        List<ItemController> possibleItems = new List<ItemController>();
 
-        foreach (Loot item in LootList)
+        foreach (ItemController item in LootListGameObj)
         {
             if (randomNumber <= item.dropChance)
             {
@@ -21,7 +21,7 @@ public class LootBag : MonoBehaviour
         }
         if (possibleItems.Count > 0)
         {
-            Loot droppedItem = possibleItems[Random.Range(0, possibleItems.Count)];
+            ItemController droppedItem = possibleItems[Random.Range(0, possibleItems.Count)];
             return droppedItem;
         }
         return null;
@@ -29,17 +29,42 @@ public class LootBag : MonoBehaviour
 
     public void InstantiateLoot(Vector3 spawnPosition)
     {
-        Loot droppedItem = GetDroppedItem();
+        ItemController droppedItem = GetDroppedItem();
         if (droppedItem != null)
         {
-            GameObject lootGameObject = Instantiate(droppedItemPrefab, spawnPosition, Quaternion.identity);
-            lootGameObject.GetComponent<SpriteRenderer>().sprite = droppedItem.lootSprite;
-            lootGameObject.GetComponent<ItemPrefab>().setData(droppedItem);
-
-            // float dropForce = 300f;
-            // Vector2 dropDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-            // lootGameObject.GetComponent<Rigidbody2D>().AddForce(dropDirection * dropForce, ForceMode2D.Impulse);
+            GameObject lootGameObject = Instantiate(droppedItem.gameObject, spawnPosition, Quaternion.identity);
         }
     }
+
+    // Loot GetDroppedItem()
+    // {
+    //     int randomNumber = Random.Range(1, 101);
+    //     List<Loot> possibleItems = new List<Loot>();
+
+    //     foreach (Loot item in LootList)
+    //     {
+    //         if (randomNumber <= item.dropChance)
+    //         {
+    //             possibleItems.Add(item);
+    //         }
+    //     }
+    //     if (possibleItems.Count > 0)
+    //     {
+    //         Loot droppedItem = possibleItems[Random.Range(0, possibleItems.Count)];
+    //         return droppedItem;
+    //     }
+    //     return null;
+    // }
+
+    // public void InstantiateLoot(Vector3 spawnPosition)
+    // {
+    //     Loot droppedItem = GetDroppedItem();
+    //     if (droppedItem != null)
+    //     {
+    //         GameObject lootGameObject = Instantiate(droppedItemPrefab, spawnPosition, Quaternion.identity);
+    //         lootGameObject.GetComponent<SpriteRenderer>().sprite = droppedItem.lootSprite;
+    //         lootGameObject.GetComponent<ItemPrefab>().setData(droppedItem);
+    //     }
+    // }
 
 }

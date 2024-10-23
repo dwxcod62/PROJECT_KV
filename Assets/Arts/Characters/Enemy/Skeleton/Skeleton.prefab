@@ -847,3 +847,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9112f59524246a7459dda4e148e64cd8, type: 2}
   - {fileID: 11400000, guid: 8757f9005674d13489f0932eba1a3171, type: 2}
   - {fileID: 11400000, guid: c8578c65cdc51064d9983b8f5928b48b, type: 2}
+  LootListGameObj:
+  - {fileID: 1172870447289888546, guid: e7a1615cfd5566146b99bfe75f695d4e, type: 3}

@@ -58,9 +58,45 @@ public class UIInventory : MonoBehaviour
 
     }
 
-    public void addItem(Loot item)
+    public void AddItem(GameObject item)
     {
-        listOfUIItem[0].SetData(item.lootSprite, 1);
+        bool isAdded = false;
+
+        Sprite sprite = item.GetComponent<ItemController>().ItemImage;
+        string name = item.GetComponent<ItemController>().ItemName;
+
+        foreach (var uiItem in listOfUIItem)
+        {
+            if (uiItem.CheckItemAlready(name))
+            {
+                uiItem.AddQuantity(1);
+                isAdded = true;
+                break;
+            }
+        }
+
+        int EmptyPos = GetFirstEmptySlot();
+
+        print(EmptyPos);
+
+        if (!isAdded && EmptyPos != -1)
+        {
+            listOfUIItem[EmptyPos].SetData(sprite, 1, name);
+        }
+
+    }
+
+    public int GetFirstEmptySlot()
+    {
+        for (int i = 0; i < listOfUIItem.Count; i++)
+        {
+            if (listOfUIItem[i].IsEmpty())
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public void Hide()

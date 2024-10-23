@@ -6,36 +6,60 @@ using UnityEngine.UI;
 
 public class UIInventoryItem : MonoBehaviour
 {
+    private string _itemName;
+    private int _quantity;
+
     [SerializeField] private Image itemImage;
     [SerializeField] private TMP_Text quantityTxt;
     [SerializeField] private Image borderImage;
 
-    public event Action<UIInventoryItem> OnItemClicked, OnItemDroppedOn, OnItemBeginDrag, OnItemEndDrag, OnItemMouseBtnClick;
-    private bool empty = true;
+    public event Action<UIInventoryItem> OnItemClicked;
+    public event Action<UIInventoryItem> OnItemDroppedOn;
+    public event Action<UIInventoryItem> OnItemBeginDrag;
+    public event Action<UIInventoryItem> OnItemEndDrag;
+    public event Action<UIInventoryItem> OnItemMouseBtnClick;
 
-    public void Awake()
+    private bool _isEmpty = true;
+
+    private void Awake()
     {
-
         ResetData();
         Deselect();
-
     }
 
     public void ResetData()
     {
-        this.itemImage.gameObject.SetActive(false);
+        itemImage.gameObject.SetActive(false);
     }
+
     public void Deselect()
     {
         borderImage.enabled = false;
     }
-    public void SetData(Sprite sprite, int quantity)
+
+    public void SetData(Sprite sprite, int quantity, string itemName)
     {
-        this.itemImage.gameObject.SetActive(true);
-        this.itemImage.sprite = sprite;
-        this.quantityTxt.text = quantity + "";
-        this.empty = false;
+        _itemName = itemName;
+        _quantity = quantity;
+
+        itemImage.gameObject.SetActive(true);
+        itemImage.sprite = sprite;
+        quantityTxt.text = _quantity.ToString();
+        _isEmpty = false;
     }
+
+    public bool CheckItemAlready(string itemName)
+    {
+        return _itemName == itemName;
+    }
+
+    public void AddQuantity(int quantity)
+    {
+        _quantity += quantity;
+        quantityTxt.text = _quantity.ToString();
+    }
+
+    public bool IsEmpty() => _isEmpty;
 
     public void Select()
     {
@@ -44,8 +68,7 @@ public class UIInventoryItem : MonoBehaviour
 
     public void OnBeginDrag()
     {
-        if (empty)
-            return;
+        if (_isEmpty) return;
         OnItemBeginDrag?.Invoke(this);
     }
 
@@ -61,12 +84,9 @@ public class UIInventoryItem : MonoBehaviour
 
     public void OnPointerClick(BaseEventData data)
     {
+        if (_isEmpty) return;
 
-
-        if (empty)
-            return;
-
-        PointerEventData pointerData = (PointerEventData)data;
+        var pointerData = (PointerEventData)data;
 
         if (pointerData.button == PointerEventData.InputButton.Right)
         {
