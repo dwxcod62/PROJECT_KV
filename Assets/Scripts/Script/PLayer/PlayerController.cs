@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, Character
 {
     // Components and Input
     private Vector2 movementInput;
@@ -16,9 +16,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxSpeed = 2.5f;
     [SerializeField] private int weapon = 1;
     [SerializeField] private UIInventory uIInventory;
+    [SerializeField] private BulletController bulletPrefab;
 
+    private bool canAttack = true;
     private bool isMoving = false;
     private bool canMove = true;
+    public bool facingRight = true;
+
+
 
     bool IsMoving
     {
@@ -92,6 +97,7 @@ public class PlayerController : MonoBehaviour
     {
         spriteRenderer.flipX = !isRight;
         gameObject.BroadcastMessage("IsFacingRight", isRight);
+        facingRight = isRight;
     }
 
     // Lock and Unlock Movement
@@ -107,16 +113,45 @@ public class PlayerController : MonoBehaviour
 
     void OnFire()
     {
-        animator.SetTrigger("isAttack");
+        if (canAttack)
+        {
+            animator.SetTrigger("isAttack");
 
-        // Determine mouse position relative to player
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        UpdateFacingDirectionByMouse(mousePos);
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            UpdateFacingDirectionByMouse(mousePos);
+
+            if (weapon == 2)
+                ShootBullet();
+        }
+    }
+
+    private void ShootBullet()
+    {
+        Vector3 screenPosition = gameObject.transform.position;
+
+        // Offset calculation for bullet spawning based on facing direction
+        float offsetWidth = spriteRenderer.bounds.size.x / 4 * (facingRight ? 1 : -1);
+        Vector3 newPosition = new Vector3(screenPosition.x + offsetWidth, screenPosition.y, screenPosition.z);
+
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0f;  // Set z to 0 because we're working in 2D
+
+        Vector3 direction = (mousePosition - newPosition).normalized;
+
+        var bullet = Instantiate(bulletPrefab, newPosition, Quaternion.identity);
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        bullet.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
+
+        float bulletSpeed = 1.5f;
+        bulletRb.velocity = direction * bulletSpeed;
     }
 
     void OnChangeWeapon()
     {
-        weapon = 1 - weapon;
+        weapon = (weapon + 1) % 3;
         animator.SetInteger("idWeapon", weapon);
     }
 
@@ -128,4 +163,8 @@ public class PlayerController : MonoBehaviour
             uIInventory.AddItem(col.gameObject);
         }
     }
+
+    public void LockAttack() => canAttack = false;
+    public void UnLockAttack() => canAttack = true;
+
 }

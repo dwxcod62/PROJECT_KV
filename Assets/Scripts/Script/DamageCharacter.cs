@@ -17,7 +17,7 @@ public class DamageCharacter : MonoBehaviour, IDamageAble
     Collider2D physicCollider;
 
     bool IsAlive = true;
-    public Image healthBarFill;
+    public Image healthBarFill = null;
 
     public void Start()
     {
@@ -45,6 +45,10 @@ public class DamageCharacter : MonoBehaviour, IDamageAble
             if (healthBarFill != null)
             {
                 healthBarFill.fillAmount = _health / _maxHealth;
+            }
+            else
+            {
+                Debug.LogWarning("Health bar fill image is not assigned.");
             }
 
             if (_health <= 0)
@@ -96,7 +100,7 @@ public class DamageCharacter : MonoBehaviour, IDamageAble
         rb.AddForce(knockValue);
     }
 
-    void IDamageAble.OnHit(float damage)
+    public void OnHit(float damage)
     {
         Health -= damage;
     }

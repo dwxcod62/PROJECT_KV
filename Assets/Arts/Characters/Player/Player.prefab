@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1131487235621288128}
   - component: {fileID: 1077860330284035370}
   - component: {fileID: 3315925333621758983}
+  - component: {fileID: 7778652144543369522}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -229,6 +230,9 @@ MonoBehaviour:
   moveSpeed: 100
   maxSpeed: 2
   weapon: 1
+  uIInventory: {fileID: 0}
+  bulletPrefab: {fileID: 0}
+  facingRight: 1
 --- !u!114 &3315925333621758983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +250,24 @@ MonoBehaviour:
   _targetAble: 1
   disableSimulation: 1
   healthBarFill: {fileID: 0}
+--- !u!114 &7778652144543369522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765445047867466205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65dadb14711af674fa29e0dfea8b8201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 2
+  durationPoison: 15
+  durationShocked: 3
+  shocked: {fileID: 21300000, guid: d3664215b99dbd240a8349bc35059d5a, type: 3}
+  poison: {fileID: 21300000, guid: 99a1289421f0fec439c9c07786711f76, type: 3}
+  petrify: {fileID: 21300000, guid: ff0b6d0561268214d94e2df0e4e52352, type: 3}
 --- !u!1 &7637873505550833403
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,5 +361,6 @@ MonoBehaviour:
   swordDamage: 1
   knockBackForce: 500
   swordCollider: {fileID: 4056134801256156832}
+  disappearOnCollision: 0
   faceRight: {x: 0.18, y: 0, z: 0}
   faceLeft: {x: -0.18, y: 0, z: 0}
