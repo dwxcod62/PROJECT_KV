@@ -1,78 +1,163 @@
 using System;
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[CreateAssetMenu]
-public class InventorySO : ScriptableObject
+namespace Inventory.Model
 {
-    [SerializeField]
-    private List<InventoryItem> inventoryItems;
-    [field: SerializeField] public int Size { get; set; } = 9;
 
-    public void Initialize()
+    [CreateAssetMenu]
+    public class InventorySO : ScriptableObject
     {
-        inventoryItems = new List<InventoryItem>();
-        for (int i = 0; i < Size; i++)
-        {
-            inventoryItems.Add(InventoryItem.GetEmptyItem());
-        }
-    }
+        [SerializeField]
+        private List<InventoryItem> inventoryItems;
+        [field: SerializeField] public int Size { get; set; } = 9;
+        public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated;
 
-    public void AddItem(ItemController item, int quantity)
-    {
-        for (int i = 0; i <= inventoryItems.Count; i++)
+        private bool IsInventoryFull()
+            => inventoryItems.Where(item => item.IsEmpty).Any() == false;
+
+        public void Initialize()
         {
-            if (inventoryItems[i].IsEmpty)
+
+            inventoryItems = new List<InventoryItem>();
+            for (int i = 0; i < Size; i++)
             {
-                inventoryItems[i] = new InventoryItem
-                {
-                    item = item,
-                    quantity = quantity
-                };
+                inventoryItems.Add(InventoryItem.GetEmptyItem());
             }
         }
-    }
 
-    public Dictionary<int, InventoryItem> GetCurrentInventoryState()
-    {
-        Dictionary<int, InventoryItem> returnValue = new Dictionary<int, InventoryItem>();
-        for (int i = 0; i < inventoryItems.Count; i++)
+        public int AddItem(ItemController item, int quantity)
         {
-            if (inventoryItems[i].IsEmpty)
-                continue;
-            returnValue[i] = inventoryItems[i];
+            for (int i = 0; i <= inventoryItems.Count; i++)
+            {
+                while (quantity > 0 && IsInventoryFull() == false)
+                {
+                    quantity -= AddItemToFirstFreeSlot(item, 1);
+                    InformAboutChange();
+                    return quantity;
+                }
+            }
+
+            quantity = AddStackableItem(item, quantity);
+            InformAboutChange();
+            return quantity;
         }
-        return returnValue;
+
+        private int AddStackableItem(ItemController item, int quantity)
+        {
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                if (inventoryItems[i].IsEmpty)
+                {
+                    continue;
+                }
+                if (inventoryItems[i].item.ID == item.ID)
+                {
+                    int amountPossibleToTake = inventoryItems[i].item.MaxStackSize - inventoryItems[i].quantity;
+                    if (quantity > amountPossibleToTake)
+                    {
+                        inventoryItems[i] = inventoryItems[i].ChangeQuantity(inventoryItems[i].item.MaxStackSize);
+                        quantity -= amountPossibleToTake;
+                    }
+                    else
+                    {
+                        int currentQuantity = inventoryItems[i].quantity;
+                        inventoryItems[i] = inventoryItems[i].ChangeQuantity(currentQuantity + quantity);
+                        InformAboutChange();
+                        return 0;
+                    }
+                }
+            }
+
+            while (quantity > 0 && IsInventoryFull() == false)
+            {
+                int newQuantity = Mathf.Clamp(quantity, 0, item.MaxStackSize);
+                quantity -= newQuantity;
+                AddItemToFirstFreeSlot(item, newQuantity);
+            }
+            return quantity;
+        }
+
+        private int AddItemToFirstFreeSlot(ItemController item, int quantity)
+        {
+
+            InventoryItem newItem = new InventoryItem
+            {
+                item = item,
+                quantity = quantity,
+            };
+
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                if (inventoryItems[i].IsEmpty)
+                {
+                    inventoryItems[i] = newItem;
+                    return quantity;
+                }
+            }
+            return 0;
+        }
+
+        // public void AddItem(ItemController item, int quantity)
+        // {
+        //     for (int i = 0; i <= inventoryItems.Count; i++)
+        //     {
+        //         if (inventoryItems[i].IsEmpty)
+        //         {
+        //             inventoryItems[i] = new InventoryItem
+        //             {
+        //                 item = item,
+        //                 quantity = quantity
+        //             };
+        //         }
+        //     }
+        // }
+
+        public Dictionary<int, InventoryItem> GetCurrentInventoryState()
+        {
+            Dictionary<int, InventoryItem> returnValue = new Dictionary<int, InventoryItem>();
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                if (inventoryItems[i].IsEmpty)
+                    continue;
+                returnValue[i] = inventoryItems[i];
+            }
+            return returnValue;
+        }
+
+        public void AddItem(InventoryItem item)
+        {
+            AddItem(item.item, item.quantity);
+        }
+
+        private void InformAboutChange()
+        {
+            OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
+        }
+
     }
 
-}
-
-
-
-[SerializeField]
-public struct InventoryItem
-{
-    public int quantity;
-    public ItemController item;
-
-    public readonly bool IsEmpty => item == null;
-
-    public InventoryItem ChangeQuantity(int newQuantity)
+    [SerializeField]
+    public struct InventoryItem
     {
-        return new InventoryItem
+        public int quantity;
+        public ItemController item;
+        public bool IsEmpty => item == null;
+
+        public InventoryItem ChangeQuantity(int newQuantity)
         {
-            item = this.item,
-            quantity = newQuantity
+            return new InventoryItem
+            {
+                item = this.item,
+                quantity = newQuantity
+            };
+        }
+
+        public static InventoryItem GetEmptyItem() => new InventoryItem
+        {
+            item = null,
+            quantity = 0
         };
     }
-
-    public static InventoryItem GetEmptyItem() => new InventoryItem
-    {
-        item = null,
-        quantity = 0
-    };
-
-
 }

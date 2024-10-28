@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using Inventory;
+using Inventory.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour, Character
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    private InventoryController inventoryController;
 
     // Movement and Control Variables
     [SerializeField] private float moveSpeed = 100f;
@@ -79,8 +80,6 @@ public class PlayerController : MonoBehaviour, Character
         }
     }
 
-
-
     private void UpdateFacingDirectionByMouse(Vector3 mousePos)
     {
         if (mousePos.x > transform.position.x)
@@ -103,7 +102,6 @@ public class PlayerController : MonoBehaviour, Character
     // Lock and Unlock Movement
     public void LockMovement() => canMove = false;
     public void UnLockMovement() => canMove = true;
-
 
     // PLAYER INPUT
     void OnMove(InputValue movementValue)
@@ -160,7 +158,7 @@ public class PlayerController : MonoBehaviour, Character
     {
         if (col.gameObject.CompareTag("Item"))
         {
-            uIInventory.AddItem(col.gameObject);
+            // uIInventory.AddItem(col.gameObject);
         }
     }
 

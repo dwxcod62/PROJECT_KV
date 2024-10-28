@@ -1,25 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ItemController : MonoBehaviour
+
+namespace Inventory.Model
 {
-    [SerializeField] public Sprite ItemImage;
-    [SerializeField] public string ItemName;
-    [SerializeField] public int dropChance;
 
-    public ItemController(string ItemName, int dropChance)
+    public class ItemController : MonoBehaviour
     {
-        this.ItemName = ItemName;
-        this.dropChance = dropChance;
-    }
+        [field: SerializeField] public Sprite ItemImage;
+        [field: SerializeField] public string ItemName;
+        [field: SerializeField] public int dropChance;
+        public int ID => GetInstanceID();
 
-    void Start()
-    {
-        int animation_id = Data.GetAniId(ItemName);
-        print(animation_id);
-        GetComponent<Animator>().SetInteger("Id", animation_id);
-    }
+        [field: SerializeField] public int MaxStackSize = 99;
 
+        public ItemController(string ItemName, int dropChance)
+        {
+            this.ItemName = ItemName;
+            this.dropChance = dropChance;
+        }
+
+        void Start()
+        {
+            int animation_id = Data.GetAniId(ItemName);
+            print(animation_id);
+            GetComponent<Animator>().SetInteger("Id", animation_id);
+        }
+    }
 }
+
