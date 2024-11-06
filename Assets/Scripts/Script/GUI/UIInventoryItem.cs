@@ -20,7 +20,7 @@ namespace Inventory.UI
         public event Action<UIInventoryItem> OnItemBeginDrag;
         public event Action<UIInventoryItem> OnItemEndDrag;
         public event Action<UIInventoryItem> OnItemMouseBtnClick;
-
+    
         private bool _isEmpty = true;
 
         private void Awake()
